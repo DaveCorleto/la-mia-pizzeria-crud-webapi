@@ -1,0 +1,32 @@
+﻿
+
+<nav>
+    <ul>
+        <li><a href="@Url.Action("Index", "Pizza")">Home</a></li>
+        <li><a href="@Url.Action("Create", "Pizza")">Menù</a></li>
+    </ul>
+</nav>
+
+<style>
+
+    nav {
+        margin-top:30px;
+    }
+
+    ul {
+        display:flex;
+        justify-content:center;
+        gap: 50px;
+        align-content:center;     
+    }
+    li, a {
+        list-style: none;
+    }
+    ul li:hover {
+        transform: scale(1.2);
+    }
+    a {
+        color:white;
+        font-size:20px;
+    }
+</style>

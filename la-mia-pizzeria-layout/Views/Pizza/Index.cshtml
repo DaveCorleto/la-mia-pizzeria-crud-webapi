@@ -1,0 +1,124 @@
+﻿@using Test_MVC_2.Models
+
+@model List<Pizza>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_LayoutPersonalizzato";
+
+}
+
+<h1>MENU</h1>
+<h2>Le Nostre Pizze</h2>
+
+
+
+<div class="pizza-cont">
+    @foreach (var pizza in Model)
+    {
+        <div class="pizza">
+            <div class="name">@pizza.Name  @pizza.Price.ToString("C")</div>
+            @* <div class="description">@pizza.Description</div> *@
+            <div class="url">
+                <img src="@pizza.Url" alt="@pizza.Name" class="img-fluid" style="max-width: 300px;" />
+            </div>
+
+            <div class="buttons">
+                @if (User.IsInRole("USER"))
+                {
+                    <div class="det">
+                        <button><a href='@Url.Action("Show", "Pizza", new { id = pizza.Id })'>Dettaglio</a></button>
+                    </div>
+                }
+
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <div class="mod">
+                        <button>
+                            <a href='@Url.Action("Update", "Pizza", new { id = pizza.Id })'>
+                                Modifica
+                            </a>
+                        </button>
+                    </div>
+                }
+
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <div class="del">
+                        <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Elimina" id="del" />
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
+@if (User.IsInRole("ADMIN"))
+{
+    <div class="new_pizza">
+        <a href="@Url.Action("Create", "Pizza")" id="new_pizza-link">
+            Aggiungi una nuova pizza!!!
+        </a>
+    </div>
+}
+
+<style>
+    .pizza-cont {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .pizza {
+        flex-basis: calc((100% / 4) - 10px);
+        margin: 5px; /* Aggiunto margine per separare le pizze */
+    }
+
+    .new_pizza {
+        width: 50%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    #new_pizza-link {
+        margin: auto;
+        text-align: center;
+    }
+
+    .buttons {
+        display:flex;
+        justify-content: center;
+        align-items:center;
+        gap:15px;
+
+    }
+
+    .mod button, #del button, .det button {
+        background-color: green;
+        border-radius: 5px;
+        color: white;
+        transition: transform 0.3s ease; 
+    }
+
+    #del button {
+        background-color: red;
+    }
+
+        
+    .mod button:hover, #del button:hover, .det button:hover ,.url img:hover {
+            transform: scale(1.1); 
+    }
+    .url {
+        margin-top: 15px;
+        margin-bottom:25px;
+    }
+
+
+</style>
+

@@ -1,0 +1,86 @@
+﻿
+@using Test_MVC_2.Models
+
+@model PizzaFormModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_LayoutPersonalizzato";
+
+}
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+
+
+<div>
+    <div class="wrapper">
+        <div class="form-container">
+            <form asp-controller="Pizza" asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div>
+                    <label for="inputName">Inserisci il nome:</label>
+                    <br />
+                    <input asp-for="pizza.Name" class="create-input" id="inputName" />
+                    <br />
+                    <span asp-validation-for="pizza.Name" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="InputDescription">Inserisci la descrizione:</label>
+                    <br />
+                    <input asp-for="pizza.Description" class="create-input" id="inputDescription" />
+                    <br />
+                    <span asp-validation-for="pizza.Description" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="inputUrl">Inserisci la foto:</label>
+                    <br />
+                    <input asp-for="pizza.Url" class="create-input" id="inputUrl" />
+                    <br />
+                    <span asp-validation-for="pizza.Url" class="text-danger"></span>
+                </div>
+                <div>
+                    <label for="inputPrice">Inserisci un prezzo:</label>
+                    <br />
+                    <input asp-for="pizza.Price" class="create-input" id="inputPrice" />
+                    <br />
+                    <span asp-validation-for="pizza.Price" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <strong>Categoria:</strong>
+                    <select asp-for="pizza.CategoryId" rows="10" class="d-block w-100">
+                        <option value=""></option>
+                        @foreach (Category category in Model.Categories)
+                        {
+                            @if (Model.pizza.CategoryId == category.Id)
+                            {
+                                <option value="@category.Id" selected>@category.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@category.Id">@category.Title</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <strong>Ingredienti:</strong>
+                    @for (int i = 0; i < Model.Ingredients.Count; i++)
+                    {
+                        <div>
+                            <input type="checkbox" name="SelectedIngredients" value="@Model.Ingredients[i].Value"
+                            @(Model.SelectedIngredients.Contains(Model.Ingredients[i].Value) ? "checked" : "") />
+                            @Model.Ingredients[i].Text
+                        </div>
+                    }
+                </div>
+
+                <div>
+                    <input type="submit" class="submit-button" value="Salva">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

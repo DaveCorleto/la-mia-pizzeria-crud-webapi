@@ -1,0 +1,49 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/*.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}*/
+
+
+body {
+    margin-bottom: 60px;
+    background-image: url("../img/locale.jpg");
+    background-size: cover;
+    }
+
+/*html {
+  position: relative;
+  min-height: 100%;
+}*/
+
+h1 {
+    color:red;
+    text-align: center;
+}
+h2 {
+    text-align:center;
+    
+}
+.pizza {
+    margin-top: 20px;
+}
+.container {
+    margin:auto;
+    text-align:center;
+}
+.name, .description, .url,.price {
+    text-align: center;
+    color: white;
+}
+img {
+    border-radius: 5px;
+    border: 2px solid white;
+}

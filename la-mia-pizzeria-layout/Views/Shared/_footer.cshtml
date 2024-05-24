@@ -1,0 +1,72 @@
+﻿
+<footer>
+    <div class="container">
+        <div class="footer-info">
+            <div><strong>Indirizzo:  </strong> Via Pizzeria, 12345, Città</div>
+            <div><strong>Telefono:  </strong> 0123 456789</div>
+            <div><strong>Email:  </strong> info@pizzeria.com</div>
+        </div>
+    </div>
+    <div class="credits">
+        <div class="social">
+            <a href="https://www.facebook.com/pizzeria" target="_blank" class="social-link"><i class="fab fa-facebook-square"></i></a>
+            <a href="https://www.instagram.com/pizzeria" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://twitter.com/pizzeria" target="_blank" class="social-link"><i class="fab fa-twitter-square"></i></a>
+        </div>
+        <p>&copy; 2024 Pizzeria. Tutti i diritti riservati.</p>
+    </div>
+</footer>
+
+<style>
+    footer {
+        text-align: center;
+        height:200px;
+    }
+
+    .container {
+        display: flex;
+        width:80%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .footer-info {
+        margin: auto;
+        color:white;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .social-link {
+        color: white;
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    .credits {
+        margin-top: 20px;
+        font-size: 14px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        gap:50px;
+        align-items:center;
+
+    }
+
+    .social {
+        display:flex;
+        justify-content: flex-end;
+    }
+
+    .fab {
+        transition: color 0.3s ease;
+    }
+
+    .social-link:hover {
+        color: #e91e63;
+    }
+</style>

@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "null";
+}
+    @* 1. Dichiarare una variabile valorizzandola con il nostro nome.
+    Dichiarare un'altra variabile valorizzandola con il nostro cognome.
+    Stampare il nostro nome e cognome all'interno di un tag h2. 
+
+    *@
+@{
+    string nome = "Davide";
+    string cognome = "Corleto";
+
+    //     2.Creare una funzione che stampa la somma dei numeri che vanno da 1 a n(con n passato come parametro -n incluso)
+    // Stampare dentro uno span il risultato.
+
+    int n = 17;
+
+    int Somma(int n)
+    {
+        int somma = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            somma += i;
+        }
+
+        return somma;
+    }
+    int risultato = Somma(n);
+
+    // 3.Contare quante volte la lettera a è presente nalla frase "nel mezzo del cammin di nostra vita" e stampare questo valore in pagina
+
+    string phrase = "nel mezzo del cammin di nostra vita";
+    char letter = 'a';
+
+
+    int Contacarattere(string phrase, char letter)
+    {
+        int count = 0;
+
+        // Itera attraverso ogni carattere nella frase
+        foreach (char l in phrase)
+        {
+            // Incrementa il conteggio se il carattere corrente è uguale al carattere specificato
+            if (l == letter)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+    int contalettere = Contacarattere(phrase, letter);
+
+    // 4.Creare una List<int>
+    // di 20 numeri interi(generati random da 1 a 90, 1 e 90 inclusi) e mostrare in pagina solo i numeri compresi tra 20 e 70
+
+    // Istanziazione della classe Random
+    Random random = new Random();
+
+    List<int> numeriRandomda20a70 = new List<int>();
+
+
+    for (int i = 0; i < 20; i++)
+    {
+        int numeroCasuale = random.Next(0, 91); 
+
+        // Filtra i numeri compresi tra 20 e 70
+        if (numeroCasuale >= 20 && numeroCasuale <= 70)
+        {
+            numeriRandomda20a70.Add(numeroCasuale);
+        }
+    }
+
+
+    // 5. Stampare in pagina la data e l'ora attuale (usando la classe DateTime) con il formato anno-mese-giorno ore:minuti:secondi
+
+    DateTime dataAttuale = DateTime.Now;
+    string dataCorretta = dataAttuale.ToString("yyyy-MM-dd HH:mm:ss");
+
+    // 6. Partendo dalla data di oggi (usando la classe DateTime) stampare in pagina
+    // a. la data di 7 giorni fa
+    // b. che giorno della settimana è oggi (il risultato dovrà  essere il nome del giorno (Lunedì, Martedì, ...)
+    // c. che giorno della settimana sarà  nello stesso giorno e mese di oggi ma tra un anno (il risultato dovrÃ  essere il nome del giorno (Lunedì, Martedì, ...)
+
+
+    // Data della settimana scorsa: 
+
+    DateTime dataScorsaSettimana = dataAttuale.AddDays(-7);
+
+    string dataScorsaSettimanaFormattata = dataScorsaSettimana.ToString("yyyy-MM-dd HH:mm:ss");
+
+    // Nome del giorno della settimana per oggi 
+    string giornoSettimanaOggi = dataAttuale.ToString("dddd", new System.Globalization.CultureInfo("it-IT"));
+
+    // Data e ora tra un anno esatto
+    DateTime dataTraUnAnno = dataAttuale.AddYears(1);
+
+    // Giorno della settimana tra un anno
+    string giornoSettimanaTraUnAnno = dataTraUnAnno.ToString("dddd", new System.Globalization.CultureInfo("it-IT"));
+
+}
+
+@* <div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div> *@
+
+<h2>@nome @cognome</h2>
+<div>il risultato della somma dei numeri che vanno da 1 a n è: @risultato </div>
+<div>Quante "a" ci sono nella frase? : @contalettere </div>
+<ul>
+    @foreach (int numeri in numeriRandomda20a70)
+    {
+        <li>@numeri</li>
+    }
+    
+</ul>
+<div>Data attuale: @dataCorretta </div>
+<div>Data della scorsa settimana: @dataScorsaSettimana </div>
+<div>Che giorno è oggi? : @giornoSettimanaOggi </div>
+<div>Che giorno sarà tra un anno esatto? @giornoSettimanaTraUnAnno </div>
+
+
+
+
+
+
+
+

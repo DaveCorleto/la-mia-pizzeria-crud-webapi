@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using NuGet.Versioning;
 using System.Reflection.Metadata;
 using Test_MVC_2.Models;
 
@@ -43,6 +45,12 @@ namespace Test_MVC_2.Data
             //Altrimenti mi viene restituito solo l'elemento pizza con valore di category null
 
             return db.Pizzas.FirstOrDefault(p => p.Id == id);
+        }
+
+        public static List<Pizza> RecuperaPizzaDaNome(string Name)
+        {
+            using PizzaContext db = new PizzaContext();
+            return db.Pizzas.Where(x => x.Name.ToLower().Contains(Name.ToLower())).ToList();
         }
 
         public static void InserisciPizza(Pizza pizza, List<string> selectedIngredients)
@@ -113,6 +121,91 @@ namespace Test_MVC_2.Data
             }
         }
 
+
+        //Versione della Update per Api
+        //public static bool ModificaPizza(int id, string name, string description, string url, float price, int? categoryid, List<string> ingredients)
+        //{
+        //    using PizzaContext db = new PizzaContext();
+        //    var pizza = db.Pizzas.Where(p => p.Id == id).Include(p => p.Ingredients).FirstOrDefault();
+
+        //    if (pizza == null)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        pizza.Name = name;
+        //        pizza.Description = description;
+        //        pizza.Url = url;
+        //        pizza.Price = price;
+        //        pizza.CategoryId = categoryid;
+
+        //        pizza.Ingredients.Clear();
+        //        if (ingredients != null)
+        //        {
+        //            foreach (var ingrediente in ingredients)
+        //            {
+        //                int ingredienteId = int.Parse(ingrediente);
+        //                var ingredienteDB = db.Ingredients.FirstOrDefault(x => x.Id == ingredienteId);
+
+        //                if (ingredienteDB != null)
+        //                {
+        //                    pizza.Ingredients.Add(ingredienteDB);
+        //                }
+        //            }
+        //        }
+
+        //        db.SaveChanges();
+
+        //        return true;
+        //    }
+        //}
+
+        public static bool EditaPizzaApi(int id, string name, string description, string url, float price, int? categoryId, List<string> selectedIngredients)
+        {
+            try
+            {
+                using PizzaContext db = new PizzaContext();
+                var pizzaDaModificare = db.Pizzas
+                    .Where(p => p.Id == id)
+                    .Include(p => p.Ingredients)
+                    .FirstOrDefault();
+
+                if (pizzaDaModificare == null)
+                    return false;
+
+                pizzaDaModificare.Name = name;
+                pizzaDaModificare.Description = description;
+                pizzaDaModificare.Url = url;
+                pizzaDaModificare.Price = price;
+                pizzaDaModificare.CategoryId = categoryId;
+
+                pizzaDaModificare.Ingredients.Clear();
+                if (selectedIngredients != null)
+                {
+                    foreach (var ingredientIdStr in selectedIngredients)
+                    {
+                        if (int.TryParse(ingredientIdStr, out int ingredientId))
+                        {
+                            var ingredientFromDb = db.Ingredients.FirstOrDefault(x => x.Id == ingredientId);
+                            if (ingredientFromDb != null)
+                            {
+                                pizzaDaModificare.Ingredients.Add(ingredientFromDb);
+                            }
+                        }
+                    }
+                }
+
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
         public static bool PiallaPizza(int id)
         {
             try
@@ -155,7 +248,7 @@ namespace Test_MVC_2.Data
 
         }
 
-        //Perchè non vuole public?
+        
 
         public static List<Category> GetAllCategories()
         {
@@ -166,6 +259,11 @@ namespace Test_MVC_2.Data
         {
             using PizzaContext db = new PizzaContext();
             return db.Ingredients.ToList();
+        }
+
+        internal static void InserisciPizza(Pizza pizza)
+        {
+            throw new NotImplementedException();
         }
     }
 }
